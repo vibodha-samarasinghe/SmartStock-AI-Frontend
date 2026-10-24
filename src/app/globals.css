@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #241b35;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+  --purple-dark: #5b21b6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(
+      circle at top left,
+      #f3e8ff 0%,
+      #ffffff 35%,
+      #faf5ff 70%,
+      #ffffff 100%
+    );
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  box-shadow: 0 8px 32px rgba(91, 33, 182, 0.08);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  box-shadow: 0 10px 40px rgba(91, 33, 182, 0.1);
+}
+
+.purple-gradient {
+  background: linear-gradient(
+    135deg,
+    #7c3aed,
+    #8b5cf6,
+    #a855f7
+  );
+}
+
+.purple-text {
+  color: #7c3aed;
+}
+
+.purple-glow {
+  box-shadow:
+    0 0 25px rgba(124, 58, 237, 0.18);
+}

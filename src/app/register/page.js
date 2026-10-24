@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-export default function RegisterPage() {
+function RegisterContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -37,16 +37,15 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setError("");
 
     if (
-      !formData.shopName ||
-      !formData.ownerName ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.address ||
-      !formData.city ||
+      !formData.shopName.trim() ||
+      !formData.ownerName.trim() ||
+      !formData.email.trim() ||
+      !formData.phone.trim() ||
+      !formData.address.trim() ||
+      !formData.city.trim() ||
       !formData.password ||
       !formData.confirmPassword
     ) {
@@ -68,7 +67,7 @@ export default function RegisterPage() {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5001/api/users/register",
+        "https://smart-stock-ai-backend.vercel.app/api/users/register",
         {
           method: "POST",
           headers: {
@@ -82,7 +81,7 @@ export default function RegisterPage() {
             address: formData.address,
             city: formData.city,
             password: formData.password,
-            category: category,
+            category,
           }),
         }
       );
@@ -91,21 +90,18 @@ export default function RegisterPage() {
 
       if (!response.ok) {
         setError(data.message || "Registration failed.");
-        setLoading(false);
         return;
       }
 
       console.log("Registration successful:", data);
-
       setSuccess(true);
-      setLoading(false);
-    } catch (error) {
-      console.error("Registration error:", error);
+    } catch (err) {
+      console.error("Registration error:", err);
 
       setError(
-        "Cannot connect to the server. Please make sure the backend is running."
+        "Cannot connect to the server. Please check the backend connection."
       );
-
+    } finally {
       setLoading(false);
     }
   };
@@ -120,24 +116,16 @@ export default function RegisterPage() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-white via-purple-50 to-purple-100 text-slate-800">
-
       {/* Background Decorations */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -left-32 -top-32 h-80 w-80 rounded-full bg-purple-300/20 blur-3xl"></div>
-
-        <div className="absolute -right-32 top-1/3 h-96 w-96 rounded-full bg-purple-400/20 blur-3xl"></div>
-
-        <div className="absolute -bottom-32 left-1/3 h-96 w-96 rounded-full bg-purple-200/30 blur-3xl"></div>
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute -left-32 -top-32 h-80 w-80 rounded-full bg-purple-300/20 blur-3xl" />
+        <div className="absolute -right-32 top-1/3 h-96 w-96 rounded-full bg-purple-400/20 blur-3xl" />
+        <div className="absolute -bottom-32 left-1/3 h-96 w-96 rounded-full bg-purple-200/30 blur-3xl" />
       </div>
 
       {/* Header */}
       <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
-
-        {/* Logo */}
-        <button
-          onClick={goBack}
-          className="flex items-center gap-3"
-        >
+        <button onClick={goBack} className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-purple-800 text-2xl shadow-lg shadow-purple-300/40">
             📦
           </div>
@@ -146,14 +134,12 @@ export default function RegisterPage() {
             <h1 className="text-xl font-bold tracking-tight text-slate-900">
               SmartStock <span className="text-purple-600">AI</span>
             </h1>
-
             <p className="text-xs text-slate-500">
               Smart Inventory Management
             </p>
           </div>
         </button>
 
-        {/* Login Button */}
         <button
           onClick={goToLogin}
           className="rounded-xl border border-purple-200 bg-white/60 px-5 py-2.5 text-sm font-semibold text-purple-700 shadow-sm backdrop-blur-md transition hover:bg-purple-50"
@@ -164,10 +150,7 @@ export default function RegisterPage() {
 
       {/* Main Content */}
       <section className="relative z-10 mx-auto max-w-4xl px-6 pb-16 pt-8 lg:pt-12">
-
-        {/* Page Heading */}
         <div className="mb-8 text-center">
-
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-purple-100 text-3xl shadow-sm">
             🏪
           </div>
@@ -181,7 +164,6 @@ export default function RegisterPage() {
             business inventory smarter.
           </p>
 
-          {/* Selected Category */}
           <div className="mx-auto mt-5 inline-flex items-center gap-2 rounded-full border border-purple-200 bg-white/70 px-5 py-2.5 text-sm font-semibold text-purple-700 shadow-sm backdrop-blur-xl">
             <span>Business Type:</span>
             <span className="font-bold">{category}</span>
@@ -190,30 +172,24 @@ export default function RegisterPage() {
 
         {/* Registration Card */}
         <div className="rounded-3xl border border-white/80 bg-white/70 p-6 shadow-2xl shadow-purple-100/60 backdrop-blur-xl sm:p-8 lg:p-10">
-
           {!success ? (
             <form onSubmit={handleSubmit}>
-
               {/* Shop Information */}
               <div>
                 <div className="mb-5">
                   <h3 className="text-xl font-bold text-slate-900">
                     Shop Information
                   </h3>
-
                   <p className="mt-1 text-sm text-slate-500">
                     Tell us about your business.
                   </p>
                 </div>
 
                 <div className="grid gap-5 md:grid-cols-2">
-
-                  {/* Shop Name */}
                   <div className="md:col-span-2">
                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                       Shop Name
                     </label>
-
                     <input
                       type="text"
                       name="shopName"
@@ -224,12 +200,10 @@ export default function RegisterPage() {
                     />
                   </div>
 
-                  {/* Owner Name */}
                   <div>
                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                       Owner Name
                     </label>
-
                     <input
                       type="text"
                       name="ownerName"
@@ -240,12 +214,10 @@ export default function RegisterPage() {
                     />
                   </div>
 
-                  {/* Email */}
                   <div>
                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                       Email Address
                     </label>
-
                     <input
                       type="email"
                       name="email"
@@ -256,12 +228,10 @@ export default function RegisterPage() {
                     />
                   </div>
 
-                  {/* Phone */}
                   <div>
                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                       Phone Number
                     </label>
-
                     <input
                       type="tel"
                       name="phone"
@@ -272,12 +242,10 @@ export default function RegisterPage() {
                     />
                   </div>
 
-                  {/* City */}
                   <div>
                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                       City
                     </label>
-
                     <input
                       type="text"
                       name="city"
@@ -288,26 +256,23 @@ export default function RegisterPage() {
                     />
                   </div>
 
-                  {/* Address */}
                   <div className="md:col-span-2">
                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                       Shop Address
                     </label>
-
                     <textarea
                       name="address"
                       value={formData.address}
                       onChange={handleChange}
-                      rows="3"
+                      rows={3}
                       placeholder="Enter your shop address"
                       className="w-full resize-none rounded-xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition placeholder:text-slate-400 focus:border-purple-500 focus:ring-4 focus:ring-purple-100"
-                    ></textarea>
+                    />
                   </div>
                 </div>
               </div>
 
-              {/* Divider */}
-              <div className="my-8 border-t border-slate-200"></div>
+              <div className="my-8 border-t border-slate-200" />
 
               {/* Password Section */}
               <div>
@@ -315,20 +280,16 @@ export default function RegisterPage() {
                   <h3 className="text-xl font-bold text-slate-900">
                     Create Your Password
                   </h3>
-
                   <p className="mt-1 text-sm text-slate-500">
                     Use this password to securely access your account.
                   </p>
                 </div>
 
                 <div className="grid gap-5 md:grid-cols-2">
-
-                  {/* Password */}
                   <div>
                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                       Password
                     </label>
-
                     <input
                       type="password"
                       name="password"
@@ -339,12 +300,10 @@ export default function RegisterPage() {
                     />
                   </div>
 
-                  {/* Confirm Password */}
                   <div>
                     <label className="mb-2 block text-sm font-semibold text-slate-700">
                       Confirm Password
                     </label>
-
                     <input
                       type="password"
                       name="confirmPassword"
@@ -354,18 +313,15 @@ export default function RegisterPage() {
                       className="w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 outline-none transition placeholder:text-slate-400 focus:border-purple-500 focus:ring-4 focus:ring-purple-100"
                     />
                   </div>
-
                 </div>
               </div>
 
-              {/* Error */}
               {error && (
                 <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-600">
                   ⚠️ {error}
                 </div>
               )}
 
-              {/* Submit */}
               <button
                 type="submit"
                 disabled={loading}
@@ -374,7 +330,6 @@ export default function RegisterPage() {
                 {loading ? "Creating Account..." : "Create Shop Account →"}
               </button>
 
-              {/* Back */}
               <button
                 type="button"
                 onClick={goBack}
@@ -382,13 +337,9 @@ export default function RegisterPage() {
               >
                 ← Back to Business Selection
               </button>
-
             </form>
           ) : (
-
-            /* Success Message */
             <div className="py-10 text-center">
-
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-4xl">
                 ✓
               </div>
@@ -403,31 +354,18 @@ export default function RegisterPage() {
               </p>
 
               <div className="mx-auto mt-6 max-w-md rounded-2xl bg-purple-50 p-5 text-left">
-
-                <p className="text-sm text-slate-500">
-                  Shop Name
-                </p>
-
+                <p className="text-sm text-slate-500">Shop Name</p>
                 <p className="mt-1 font-bold text-slate-900">
                   {formData.shopName}
                 </p>
 
-                <p className="mt-4 text-sm text-slate-500">
-                  Business Type
-                </p>
+                <p className="mt-4 text-sm text-slate-500">Business Type</p>
+                <p className="mt-1 font-bold text-purple-700">{category}</p>
 
-                <p className="mt-1 font-bold text-purple-700">
-                  {category}
-                </p>
-
-                <p className="mt-4 text-sm text-slate-500">
-                  Email
-                </p>
-
+                <p className="mt-4 text-sm text-slate-500">Email</p>
                 <p className="mt-1 font-bold text-slate-900">
                   {formData.email}
                 </p>
-
               </div>
 
               <button
@@ -436,10 +374,8 @@ export default function RegisterPage() {
               >
                 Continue to Login →
               </button>
-
             </div>
           )}
-
         </div>
       </section>
 
@@ -449,7 +385,20 @@ export default function RegisterPage() {
           © 2026 SmartStock AI. Smart Inventory • Smarter Decisions
         </div>
       </footer>
-
     </main>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-purple-50 text-purple-700">
+          Loading registration...
+        </div>
+      }
+    >
+      <RegisterContent />
+    </Suspense>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 const PRODUCT_API = "https://smart-stock-ai-backend.vercel.app/api/products";
@@ -50,7 +50,7 @@ function getErrorMessage(data, fallback) {
   );
 }
 
-export default function SalesPage() {
+function SalesContent() {
   const searchParams = useSearchParams();
 
   const [products, setProducts] = useState([]);
@@ -682,5 +682,21 @@ export default function SalesPage() {
         </section>
       </div>
     </main>
+  );
+}
+
+export default function SalesPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-white">
+          <p className="font-semibold text-purple-600">
+            Loading sales...
+          </p>
+        </main>
+      }
+    >
+      <SalesContent />
+    </Suspense>
   );
 }

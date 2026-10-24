@@ -4,8 +4,8 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-const API_URL = "http://localhost:5001/api/products";
-const SALES_API = "http://localhost:5001/api/sales";
+const API_URL = "https://smart-stock-ai-backend.vercel.app/api/products";
+const SALES_API = "https://smart-stock-ai-backend.vercel.app/api/sales";
 
 function getStoredValue(key) {
   if (typeof window === "undefined") return null;

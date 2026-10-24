@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-const PRODUCT_API = "http://localhost:5001/api/products";
-const SALES_API = "http://localhost:5001/api/sales";
+const PRODUCT_API = "https://smart-stock-ai-backend.vercel.app/api/products";
+const SALES_API = "https://smart-stock-ai-backend.vercel.app/api/sales";
 
 function getToken() {
   if (typeof window === "undefined") return null;

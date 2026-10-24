@@ -3,7 +3,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const API_URL = "http://localhost:5001/api/products";
+const API_URL = "https://smart-stock-ai-backend.vercel.app/api/products";
 
 const emptyForm = {
   name: "",

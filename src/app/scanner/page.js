@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Html5Qrcode } from "html5-qrcode";
 
-const API_URL = "http://localhost:5001/api/products";
+const API_URL = "https://smart-stock-ai-backend.vercel.app/api/products";
 
 export default function ScannerPage() {
   const router = useRouter();

@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const API_URL = "http://localhost:5001/api/products";
+const API_URL = "https://smart-stock-ai-backend.vercel.app/api/products";
 
 export default function AlertsPage() {
   const router = useRouter();

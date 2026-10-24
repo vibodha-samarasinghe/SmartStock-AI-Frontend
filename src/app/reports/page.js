@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
-const PRODUCT_API = "http://localhost:5001/api/products";
-const SALES_API = "http://localhost:5001/api/sales";
+const PRODUCT_API = "https://smart-stock-ai-backend.vercel.app/api/products";
+const SALES_API = "https://smart-stock-ai-backend.vercel.app/api/sales";
 
 export default function ReportsPage() {
   const [products, setProducts] = useState([]);

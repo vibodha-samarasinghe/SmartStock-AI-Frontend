@@ -21,7 +21,7 @@ export default function LoginPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/users/login",
+        "https://smart-stock-ai-backend.vercel.app/api/users/login",
         {
           method: "POST",
           headers: {

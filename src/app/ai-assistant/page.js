@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import LorryAnimation from "@/components/LorryAnimation";
 
-const API_URL = "http://localhost:5001/api/products";
+const API_URL = "https://smart-stock-ai-backend.vercel.app/api/products";
 const MIRA_IMAGE = "/images/mira.png";
 
 const INITIAL_MESSAGE = {

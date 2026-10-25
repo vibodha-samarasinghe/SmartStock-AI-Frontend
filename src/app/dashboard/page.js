@@ -400,7 +400,7 @@ export default function Dashboard() {
             className="mb-2 flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left font-medium text-slate-600 transition hover:bg-purple-50 hover:text-purple-700"
           >
             <Image
-              src="/Images/mira2.png"
+              src="/Images/Mira2.png"
               alt="Mira"
               width={24}
               height={24}
@@ -705,7 +705,7 @@ export default function Dashboard() {
               <div className="flex items-center gap-3">
                 <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-purple-200 bg-white p-1 shadow-md">
                   <Image
-                    src="/Images/mira2.png"
+                    src="/Images/Mira2.png"
                     alt="Mira AI Assistant"
                     width={56}
                     height={56}

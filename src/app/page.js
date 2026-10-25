@@ -32,7 +32,7 @@ export default function Home() {
       id: "grocery",
       title: "Grocery",
       description: "Manage food, beverages and daily essentials",
-      image: "/images/Grocery.jpeg",
+      image: "/Images/Grocery.jpeg",
       color: "from-green-50 to-emerald-100",
       border: "border-emerald-300",
       accent: "bg-emerald-500",
@@ -41,7 +41,7 @@ export default function Home() {
       id: "electronics",
       title: "Electronics",
       description: "Manage phones, computers and electronic products",
-      image: "/images/Electronic.jpeg",
+      image: "/Images/Electronic.jpeg",
       color: "from-blue-50 to-sky-100",
       border: "border-blue-300",
       accent: "bg-blue-500",
@@ -50,7 +50,7 @@ export default function Home() {
       id: "cosmetics",
       title: "Cosmetics",
       description: "Manage beauty, skincare and personal care products",
-      image: "/images/Cosmatics.jpg",
+      image: "/Images/Cosmatics.jpg",
       color: "from-pink-50 to-rose-100",
       border: "border-pink-300",
       accent: "bg-pink-500",
@@ -142,7 +142,7 @@ export default function Home() {
               </div>
 
               <img
-                src="/images/Mira1 .png"
+                src="/Images/Mira1 .png"
                 alt="Mira AI Assistant"
                 className="relative mx-auto max-h-[460px] w-full object-contain drop-shadow-[0_0_30px_rgba(216,180,254,0.5)]"
               />
@@ -279,7 +279,7 @@ export default function Home() {
           <div className="pointer-events-none absolute h-56 w-72 rounded-full bg-fuchsia-300/25 blur-[65px] sm:h-64 sm:w-96" />
 
           <img
-            src="/images/mira2.png"
+            src="/Images/mira2.png"
             alt="Mira AI Assistant"
             className="relative z-10 h-auto w-full max-w-2xl scale-100 object-contain drop-shadow-[0_0_30px_rgba(216,180,254,0.55)]"
           />

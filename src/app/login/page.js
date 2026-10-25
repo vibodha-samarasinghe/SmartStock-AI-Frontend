@@ -84,7 +84,7 @@ export default function LoginPage() {
 
           <div className="relative z-10 flex items-center gap-3">
             <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-white/30 bg-white p-2 shadow-lg">
-            <Logo />
+            <Logo/>
             </div>
             <div>
               <h1 className="text-xl font-bold tracking-tight">
@@ -231,7 +231,7 @@ export default function LoginPage() {
                   placeholder="Enter your password"
                   autoComplete="current-password"
                   required
-                  className="min-w-0 flex-1 bg-transparent py-3.5 text-sm text-white outline-none placeholder:text-slate-600"
+                  className="min-w-0 flex-1 bg-transparent py-3.5 text-sm text-violet-950 outline-none placeholder:text-slate-600"
                 />
 
                 <button

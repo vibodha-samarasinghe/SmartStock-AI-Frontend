@@ -284,7 +284,7 @@ export default function Dashboard() {
         <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-6">
           <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-purple-200 bg-white p-2 shadow-md">
            <Image
-            src="/images/logo1.jpg"
+            src="/Images/logo1.jpg"
             alt="SmartStock AI Logo"
             width={120}
             height={120}
@@ -323,7 +323,7 @@ export default function Dashboard() {
   ["📦", "Inventory", "/inventory"],
   ["🛒", "Sales", "/sales"],
   ["💳", "POS", "/pos"],
-  [<img src="Images/Mira.png" alt="Mira" className="h-6 w-6 rounded-full object-cover" />, "AI Assistant", "/ai-assistant"],
+  [<img src="/Images/Mira.png" alt="Mira" className="h-6 w-6 rounded-full object-cover" />, "AI Assistant", "/ai-assistant"],
   ["📷", "Scanner", "/scanner"],
 ].map(([icon, label, path]) => (
   <button

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import LorryAnimation from "@/components/LorryAnimation";
 
 const API_URL = "https://smart-stock-ai-backend.vercel.app/api/products";
-const MIRA_IMAGE = "/Images/mira.png";
+const MIRA_IMAGE = "/Images/Mira.png";
 
 const INITIAL_MESSAGE = {
   type: "bot",

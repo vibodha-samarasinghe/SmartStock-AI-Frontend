@@ -60,7 +60,9 @@ export default function LoginPage() {
       router.replace("/dashboard");
     } catch (err) {
       console.error("Login error:", err);
-      setError("Cannot connect to the server. Please check your backend.");
+      setError(
+        "Cannot connect to the server. Please check your backend."
+      );
     } finally {
       setLoading(false);
     }
@@ -75,7 +77,7 @@ export default function LoginPage() {
 
       <div className="relative grid w-full max-w-5xl overflow-hidden rounded-3xl border border-violet-100 bg-white shadow-2xl shadow-violet-200/50 md:grid-cols-2">
 
-        {/* Left branding section */}
+        {/* Left branding section - Desktop */}
         <section className="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-br from-violet-950 via-purple-900 to-violet-800 p-10 text-white md:flex lg:p-12">
 
           <div className="absolute -right-20 top-24 h-64 w-64 rounded-full border border-white/10" />
@@ -83,9 +85,10 @@ export default function LoginPage() {
           <div className="absolute bottom-20 left-10 h-36 w-36 rounded-full bg-purple-400/20 blur-3xl" />
 
           <div className="relative z-10 flex items-center gap-3">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-white/30 bg-white p-2 shadow-lg">
-            <Logo/>
+            <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-white/30 bg-white p-2 shadow-lg">
+              <Logo />
             </div>
+
             <div>
               <h1 className="text-xl font-bold tracking-tight">
                 SmartStock <span className="text-purple-200">AI</span>
@@ -119,7 +122,10 @@ export default function LoginPage() {
                 ["↗", "Sales and stock insights"],
                 ["✦", "AI-powered assistance"],
               ].map(([icon, text]) => (
-                <div key={text} className="flex items-center gap-3 text-sm text-white/90">
+                <div
+                  key={text}
+                  className="flex items-center gap-3 text-sm text-white/90"
+                >
                   <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/15 bg-white/10">
                     {icon}
                   </span>
@@ -139,9 +145,10 @@ export default function LoginPage() {
 
           {/* Mobile branding */}
           <div className="mb-10 flex items-center gap-3 md:hidden">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-violet-200 bg-white p-2 shadow-md">
-            <Logo />
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-violet-200 bg-white p-2 shadow-md">
+              <Logo />
             </div>
+
             <div>
               <h1 className="text-lg font-bold">
                 SmartStock <span className="text-violet-400">AI</span>
@@ -152,6 +159,7 @@ export default function LoginPage() {
             </div>
           </div>
 
+          {/* Login heading */}
           <div className="mb-8">
             <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl border border-violet-400/20 bg-violet-500/10 text-xl">
               👋
@@ -161,13 +169,15 @@ export default function LoginPage() {
               Welcome back
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-slate-500">
               Sign in to access your SmartStock dashboard.
             </p>
           </div>
 
+          {/* Login form */}
           <form onSubmit={handleLogin} className="space-y-5">
 
+            {/* Email */}
             <div>
               <label
                 htmlFor="email"
@@ -176,13 +186,13 @@ export default function LoginPage() {
                 Email address
               </label>
 
-              <div className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-4 transition focus-within:border-violet-500 focus-within:bg-violet-500/[0.04] focus-within:ring-4 focus-within:ring-violet-500/10">
+              <div className="group flex items-center gap-3 rounded-xl border border-violet-200 bg-violet-50/50 px-4 transition focus-within:border-violet-500 focus-within:bg-white focus-within:ring-4 focus-within:ring-violet-500/10">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.7"
-                  className="h-5 w-5 shrink-0 text-slate-500 transition group-focus-within:text-violet-400"
+                  className="h-5 w-5 shrink-0 text-slate-500 transition group-focus-within:text-violet-500"
                   aria-hidden="true"
                 >
                   <rect x="3" y="5" width="18" height="14" rx="3" />
@@ -197,11 +207,12 @@ export default function LoginPage() {
                   placeholder="you@example.com"
                   autoComplete="email"
                   required
-                  className="min-w-0 flex-1 bg-transparent py-3.5 text-sm text-violet-950 outline-none placeholder:text-violet-300"
+                  className="min-w-0 flex-1 bg-transparent py-3.5 text-sm text-violet-950 outline-none placeholder:text-slate-400"
                 />
               </div>
             </div>
 
+            {/* Password */}
             <div>
               <label
                 htmlFor="password"
@@ -216,7 +227,7 @@ export default function LoginPage() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.7"
-                  className="h-5 w-5 shrink-0 text-slate-500 transition group-focus-within:text-violet-400"
+                  className="h-5 w-5 shrink-0 text-slate-500 transition group-focus-within:text-violet-500"
                   aria-hidden="true"
                 >
                   <rect x="4" y="10" width="16" height="11" rx="3" />
@@ -231,22 +242,38 @@ export default function LoginPage() {
                   placeholder="Enter your password"
                   autoComplete="current-password"
                   required
-                  className="min-w-0 flex-1 bg-transparent py-3.5 text-sm text-violet-950 outline-none placeholder:text-slate-600"
+                  className="min-w-0 flex-1 bg-transparent py-3.5 text-sm text-violet-950 outline-none placeholder:text-slate-500"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="shrink-0 text-slate-500 transition hover:text-violet-300"
+                  aria-label={
+                    showPassword ? "Hide password" : "Show password"
+                  }
+                  className="shrink-0 text-slate-500 transition hover:text-violet-600"
                 >
                   {showPassword ? (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="h-5 w-5" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.7"
+                      className="h-5 w-5"
+                      aria-hidden="true"
+                    >
                       <path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8" />
                       <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 8.5 4.5 9.5 7-.4 1-1.3 2.4-2.7 3.6M6.2 6.2C3.9 7.6 2.1 10 1.5 12c1 2.5 4.5 7 10.5 7 1.1 0 2.2-.2 3.2-.5" />
                     </svg>
                   ) : (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="h-5 w-5" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.7"
+                      className="h-5 w-5"
+                      aria-hidden="true"
+                    >
                       <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
                       <circle cx="12" cy="12" r="3" />
                     </svg>
@@ -255,30 +282,33 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <label className="flex cursor-pointer items-center gap-2.5 text-sm text-slate-400 transition hover:text-slate-200">
+            {/* Remember me */}
+            <label className="flex cursor-pointer items-center gap-2.5 text-sm text-slate-600 transition hover:text-violet-700">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="h-4 w-4 rounded border-slate-600 bg-slate-800 accent-violet-500"
+                className="h-4 w-4 rounded border-slate-300 accent-violet-600"
               />
               Remember me
             </label>
 
+            {/* Error message */}
             {error && (
               <div
                 role="alert"
-                className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/10 p-3.5 text-sm text-red-300"
+                className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-3.5 text-sm text-red-700"
               >
                 <span aria-hidden="true">⚠</span>
                 <p>{error}</p>
               </div>
             )}
 
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3.5 font-semibold text-white shadow-lg shadow-violet-950/40 transition duration-200 hover:-translate-y-0.5 hover:from-violet-500 hover:to-indigo-500 hover:shadow-violet-900/50 focus:outline-none focus:ring-4 focus:ring-violet-500/25 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+              className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-3.5 font-semibold text-white shadow-lg shadow-violet-300/50 transition duration-200 hover:-translate-y-0.5 hover:from-violet-500 hover:to-indigo-500 focus:outline-none focus:ring-4 focus:ring-violet-500/25 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
             >
               {loading ? (
                 <>
@@ -288,29 +318,33 @@ export default function LoginPage() {
               ) : (
                 <>
                   Sign in to your account
-                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                  <span className="transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
                 </>
               )}
             </button>
           </form>
 
+          {/* Divider */}
           <div className="my-7 flex items-center gap-4">
-            <div className="h-px flex-1 bg-white/10" />
-            <span className="text-xs text-slate-600">SMARTSTOCK AI</span>
-            <div className="h-px flex-1 bg-white/10" />
+            <div className="h-px flex-1 bg-violet-100" />
+            <span className="text-xs text-slate-500">SMARTSTOCK AI</span>
+            <div className="h-px flex-1 bg-violet-100" />
           </div>
 
-          <p className="text-center text-sm text-slate-400">
-            Don't have an account?{" "}
+          {/* Register link */}
+          <p className="text-center text-sm text-slate-600">
+            Don&apos;t have an account?{" "}
             <a
               href="/register"
-              className="font-semibold text-violet-400 transition hover:text-violet-300"
+              className="font-semibold text-violet-600 transition hover:text-violet-500"
             >
               Create account
             </a>
           </p>
 
-          <p className="mt-8 text-center text-xs leading-5 text-slate-600">
+          <p className="mt-8 text-center text-xs leading-5 text-slate-500">
             Secure access to your inventory workspace.
           </p>
         </section>

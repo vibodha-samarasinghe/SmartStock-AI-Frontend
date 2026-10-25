@@ -57,21 +57,34 @@ export default function Home() {
     },
   ];
 
-  // Reusable logo button
-  const BrandLogo = ({ width = "w-52" }) => (
-    <button
-      type="button"
-      onClick={() => {
-        setStarted(false);
-        setSelectedCategory(null);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }}
-      aria-label="SmartStock AI home"
-      className="inline-flex shrink-0 text-left"
-    >
+ 
+// Reusable logo button
+const BrandLogo = ({ width = "h-16 w-16" }) => (
+  <button
+    type="button"
+    onClick={() => {
+      setStarted(false);
+      setSelectedCategory(null);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }}
+    aria-label="SmartStock AI home"
+    className="inline-flex shrink-0 items-center gap-3 text-left"
+  >
+    <span className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-purple-200 bg-white p-2 shadow-md">
       <Logo className={width} />
-    </button>
-  );
+    </span>
+
+    <span>
+      <span className="block text-xl font-bold tracking-tight text-violet-950">
+        SmartStock <span className="text-violet-500">AI</span>
+      </span>
+      <span className="block text-xs text-slate-500">
+        Intelligent Inventory Management
+      </span>
+    </span>
+  </button>
+);
+
 
   // WELCOME PAGE
   if (!started) {
@@ -279,7 +292,7 @@ export default function Home() {
           <div className="pointer-events-none absolute h-56 w-72 rounded-full bg-fuchsia-300/25 blur-[65px] sm:h-64 sm:w-96" />
 
           <img
-            src="/Images/mira2.png"
+            src="/Images/Mira2.png"
             alt="Mira AI Assistant"
             className="relative z-10 h-auto w-full max-w-2xl scale-100 object-contain drop-shadow-[0_0_30px_rgba(216,180,254,0.55)]"
           />

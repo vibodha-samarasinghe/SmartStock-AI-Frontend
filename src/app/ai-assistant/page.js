@@ -10,7 +10,7 @@ const MIRA_IMAGE = "/Images/Mira.png";
 
 const INITIAL_MESSAGE = {
   type: "bot",
-  text: "Hello! 👋 I'm Mira, your SmartStock AI Assistant. You can ask me anything about inventory in English,singlish and sinhala",
+  text: "Hello! 👋 I'm Mira, your SmartStock AI Assistant. You can ask me anything about inventory in English, Singlish and Sinhala.",
 };
 
 const QUICK_QUESTIONS = [
@@ -695,25 +695,26 @@ ${status}`;
     const utterance = new SpeechSynthesisUtterance(cleanText);
     const voices = synth.getVoices();
 
-const femaleVoiceNames =
-  /samantha|zira|karen|moira|tessa|susan|aria|jenny|ava|serena|victoria|allison|female|woman/i;
+    const femaleVoiceNames =
+      /samantha|zira|karen|moira|tessa|susan|aria|jenny|ava|serena|victoria|allison|female|woman/i;
 
-const femaleVoice = voices.find(
-  (voice) =>
-    voice.lang.toLowerCase().startsWith("en") &&
-    femaleVoiceNames.test(voice.name)
-);
+    const femaleVoice = voices.find(
+      (voice) =>
+        voice.lang.toLowerCase().startsWith("en") &&
+        femaleVoiceNames.test(voice.name)
+    );
 
-utterance.lang = "en-US";
+    utterance.lang = "en-US";
 
-if (femaleVoice) {
-  utterance.voice = femaleVoice;
-  utterance.lang = femaleVoice.lang;
-}
+    if (femaleVoice) {
+      utterance.voice = femaleVoice;
+      utterance.lang = femaleVoice.lang;
+    }
 
-utterance.rate = 0.9;
-utterance.pitch = 1.1;
-utterance.volume = 1;
+    utterance.rate = 0.9;
+    utterance.pitch = 1.1;
+    utterance.volume = 1;
+
     utterance.onstart = () => {
       speakingRef.current = true;
     };
@@ -847,7 +848,6 @@ utterance.volume = 1;
       setLorryTrigger((previous) => previous + 1);
       setLoading(false);
 
-      // Play the reply when voice output is enabled.
       if (voiceOutputRef.current) {
         speakText(answer);
       }
@@ -873,17 +873,17 @@ utterance.volume = 1;
 
   if (authChecking) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-950 px-4 text-white">
+      <main className="flex min-h-screen items-center justify-center bg-violet-50 px-4 text-slate-900">
         <div className="text-center">
           <img
             src={MIRA_IMAGE}
             alt="Mira"
-            className="mx-auto h-20 w-20 rounded-full border-2 border-violet-400 object-cover"
+            className="mx-auto h-20 w-20 rounded-full border-2 border-violet-400 object-cover shadow-lg shadow-violet-100"
           />
           <p className="mt-4 font-semibold">
             Loading Mira Assistant...
           </p>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-500">
             Checking your login session
           </p>
         </div>
@@ -892,31 +892,31 @@ utterance.volume = 1;
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="min-h-screen bg-violet-50 text-slate-900">
       {/* HEADER */}
-      <header className="border-b border-white/10 bg-slate-900">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+      <header className="border-b border-violet-100 bg-white shadow-sm">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6">
           <div>
-            <h1 className="text-xl font-bold sm:text-2xl">
+            <h1 className="text-xl font-bold text-violet-800 sm:text-2xl">
               SmartStock AI
             </h1>
-            <p className="mt-1 text-sm text-slate-400">
+            <p className="mt-1 text-sm text-slate-500">
               Mira · Inventory Assistant
             </p>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={handleClearChat}
               disabled={loading}
-              className="rounded-xl border border-white/10 px-3 py-2 text-sm transition hover:bg-white/10 disabled:opacity-50"
+              className="rounded-xl border border-violet-200 bg-white px-3 py-2 text-sm font-medium text-violet-700 transition hover:bg-violet-50 disabled:opacity-50"
             >
               Clear Chat
             </button>
 
             <button
               onClick={() => router.push("/dashboard")}
-              className="rounded-xl bg-violet-600 px-3 py-2 text-sm font-semibold transition hover:bg-violet-500"
+              className="rounded-xl bg-violet-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-violet-700"
             >
               ← Dashboard
             </button>
@@ -927,29 +927,31 @@ utterance.volume = 1;
       {/* PAGE CONTENT */}
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:py-10">
         {/* CHAT PANEL */}
-        <section className="min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-slate-900 shadow-xl">
-          <div className="flex items-center gap-3 border-b border-white/10 p-4 sm:p-5">
+        <section className="min-w-0 overflow-hidden rounded-3xl border border-violet-100 bg-white shadow-xl shadow-violet-100/60">
+          <div className="flex items-center gap-3 border-b border-violet-100 p-4 sm:p-5">
             <img
               src={MIRA_IMAGE}
               alt="Mira AI Assistant"
-              className="h-12 w-12 rounded-full border-2 border-violet-400 object-cover"
+              className="h-12 w-12 rounded-full border-2 border-violet-400 object-cover shadow-sm"
             />
 
             <div className="min-w-0 flex-1">
-              <h2 className="font-semibold">Chat with Mira</h2>
-              <p className="mt-1 flex items-center gap-2 text-xs text-emerald-400">
-                <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <h2 className="font-semibold text-slate-900">
+                Chat with Mira
+              </h2>
+              <p className="mt-1 flex items-center gap-2 text-xs text-emerald-600">
+                <span className="h-2 w-2 rounded-full bg-emerald-500" />
                 Ready to help with your inventory
               </p>
             </div>
 
-            <span className="hidden rounded-full border border-violet-400/20 bg-violet-500/10 px-3 py-1 text-xs text-violet-200 sm:inline-block">
+            <span className="hidden rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-xs font-medium text-violet-700 sm:inline-block">
               AI Assistant
             </span>
           </div>
 
           {/* LORRY ANIMATION */}
-          <div className="border-b border-white/10 p-3">
+          <div className="border-b border-violet-100 bg-violet-50/50 p-3">
             <LorryAnimation
               trigger={lorryTrigger}
               stock={totalStock}
@@ -957,7 +959,7 @@ utterance.volume = 1;
           </div>
 
           {/* CHAT MESSAGES */}
-          <div className="h-[430px] space-y-5 overflow-y-auto p-4 sm:h-[500px] sm:p-6">
+          <div className="h-[430px] space-y-5 overflow-y-auto bg-white p-4 sm:h-[500px] sm:p-6">
             {messages.map((message, index) => (
               <div
                 key={`${index}-${message.type}`}
@@ -971,15 +973,15 @@ utterance.volume = 1;
                   <img
                     src={MIRA_IMAGE}
                     alt="Mira"
-                    className="h-8 w-8 shrink-0 rounded-full border border-violet-400/60 object-cover"
+                    className="h-8 w-8 shrink-0 rounded-full border border-violet-300 object-cover"
                   />
                 )}
 
                 <div
-                  className={`max-w-[88%] whitespace-pre-line rounded-2xl px-4 py-3 text-sm leading-6 sm:max-w-[80%] ${
+                  className={`max-w-[88%] whitespace-pre-line rounded-2xl px-4 py-3 text-sm leading-6 shadow-sm sm:max-w-[80%] ${
                     message.type === "user"
                       ? "rounded-br-sm bg-violet-600 text-white"
-                      : "rounded-bl-sm border border-white/5 bg-slate-800 text-slate-100"
+                      : "rounded-bl-sm border border-violet-100 bg-violet-50 text-slate-700"
                   }`}
                 >
                   {message.text}
@@ -992,12 +994,12 @@ utterance.volume = 1;
                 <img
                   src={MIRA_IMAGE}
                   alt="Mira"
-                  className="h-8 w-8 rounded-full border border-violet-400/60 object-cover"
+                  className="h-8 w-8 rounded-full border border-violet-300 object-cover"
                 />
 
-                <div className="rounded-2xl rounded-bl-sm bg-slate-800 px-4 py-3 text-sm text-slate-300">
+                <div className="rounded-2xl rounded-bl-sm border border-violet-100 bg-violet-50 px-4 py-3 text-sm text-slate-600">
                   Mira is thinking...
-                  <span className="ml-2 inline-flex gap-1">
+                  <span className="ml-2 inline-flex gap-1 text-violet-600">
                     <span className="animate-bounce">•</span>
                     <span className="animate-bounce [animation-delay:120ms]">
                       •
@@ -1014,8 +1016,8 @@ utterance.volume = 1;
           </div>
 
           {/* QUICK QUESTIONS AND VOICE */}
-          <div className="border-t border-white/10 p-4 sm:p-5">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <div className="border-t border-violet-100 bg-white p-4 sm:p-5">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
               Quick Questions
             </p>
 
@@ -1025,7 +1027,7 @@ utterance.volume = 1;
                   key={item}
                   type="button"
                   onClick={() => setQuestion(item)}
-                  className="rounded-full border border-violet-400/30 bg-violet-500/10 px-3 py-2 text-left text-xs text-violet-100 transition hover:border-violet-300 hover:bg-violet-500/20"
+                  className="rounded-full border border-violet-200 bg-violet-50 px-3 py-2 text-left text-xs font-medium text-violet-700 transition hover:border-violet-400 hover:bg-violet-100"
                 >
                   {item}
                 </button>
@@ -1036,14 +1038,14 @@ utterance.volume = 1;
             {voiceError && (
               <p
                 role="status"
-                className="mb-3 rounded-xl border border-amber-400/20 bg-amber-400/5 p-3 text-xs leading-5 text-amber-200"
+                className="mb-3 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs leading-5 text-amber-800"
               >
                 {voiceError}
               </p>
             )}
 
             {!voiceSupported && (
-              <p className="mb-3 text-xs text-slate-400">
+              <p className="mb-3 text-xs text-slate-500">
                 Voice input may not be available in this browser. Try Chrome.
               </p>
             )}
@@ -1056,8 +1058,8 @@ utterance.volume = 1;
                 disabled={!voiceSupported || loading || authChecking}
                 className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-40 ${
                   listening
-                    ? "bg-rose-600 hover:bg-rose-500"
-                    : "border border-white/10 bg-slate-800 hover:bg-slate-700"
+                    ? "bg-rose-600 text-white hover:bg-rose-700"
+                    : "border border-violet-200 bg-white text-violet-700 hover:bg-violet-50"
                 }`}
                 aria-label={
                   listening ? "Stop voice input" : "Start voice input"
@@ -1083,7 +1085,6 @@ utterance.volume = 1;
 
                   setVoiceError("");
 
-                  // Speak the latest Mira message when Voice On is clicked.
                   const lastBotMessage = [...messages]
                     .reverse()
                     .find((message) => message.type === "bot");
@@ -1094,8 +1095,8 @@ utterance.volume = 1;
                 }}
                 className={`rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
                   voiceOutput
-                    ? "bg-violet-600 hover:bg-violet-500"
-                    : "border border-white/10 bg-slate-800 hover:bg-slate-700"
+                    ? "bg-violet-600 text-white hover:bg-violet-700"
+                    : "border border-violet-200 bg-white text-violet-700 hover:bg-violet-50"
                 }`}
                 aria-pressed={voiceOutput}
               >
@@ -1108,7 +1109,7 @@ utterance.volume = 1;
                   window.speechSynthesis?.cancel();
                   speakingRef.current = false;
                 }}
-                className="rounded-xl border border-white/10 bg-slate-800 px-4 py-2.5 text-sm transition hover:bg-slate-700"
+                className="rounded-xl border border-violet-200 bg-white px-4 py-2.5 text-sm font-medium text-violet-700 transition hover:bg-violet-50"
               >
                 Stop Audio
               </button>
@@ -1125,13 +1126,13 @@ utterance.volume = 1;
                     : "Ask or speak about your inventory..."
                 }
                 aria-label="Ask Mira a question"
-                className="min-w-0 flex-1 rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20"
+                className="min-w-0 flex-1 rounded-xl border border-violet-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
               />
 
               <button
                 type="submit"
                 disabled={!question.trim() || loading || authChecking}
-                className="rounded-xl bg-violet-600 px-4 py-3 text-sm font-semibold transition hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-40"
+                className="rounded-xl bg-violet-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Send ↑
               </button>
@@ -1144,86 +1145,93 @@ utterance.volume = 1;
         </section>
 
         {/* MIRA PANEL */}
-        <aside className="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-gradient-to-b from-violet-950 via-slate-900 to-slate-900 p-5 sm:p-6">
-          <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-violet-500/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-16 -left-12 h-48 w-48 rounded-full bg-cyan-400/10 blur-3xl" />
+        <aside className="relative overflow-hidden rounded-3xl border border-violet-200 bg-gradient-to-b from-white via-violet-50 to-purple-50 p-5 shadow-lg shadow-violet-100/60 sm:p-6">
+          <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-violet-200/60 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-16 -left-12 h-48 w-48 rounded-full bg-purple-200/60 blur-3xl" />
 
           <div className="relative">
             <div className="mb-5 flex items-center justify-between">
-              <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">
+              <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
                 ● Online
               </span>
-              <span className="text-xs text-slate-400">MIRA AI</span>
+              <span className="text-xs font-semibold tracking-wide text-violet-700">
+                MIRA AI
+              </span>
             </div>
 
-            <div className="mira-float relative mx-auto max-w-[280px] overflow-hidden rounded-[2rem] border border-white/10 bg-slate-800 shadow-2xl shadow-violet-950/40">
+            <div className="mira-float relative mx-auto max-w-[280px] overflow-hidden rounded-[2rem] border border-violet-100 bg-white shadow-xl shadow-violet-200/50">
               <img
                 src={MIRA_IMAGE}
                 alt="Mira, your SmartStock AI assistant"
                 className="aspect-[3/4] w-full object-cover object-center"
               />
 
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-transparent p-5 pt-16">
-                <p className="text-2xl font-bold">Hi, I’m Mira!</p>
-                <p className="mt-1 text-sm text-slate-200">
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-violet-950/90 via-violet-950/40 to-transparent p-5 pt-16">
+                <p className="text-2xl font-bold text-white">
+                  Hi, I’m Mira!
+                </p>
+                <p className="mt-1 text-sm text-violet-100">
                   Your smart inventory companion.
                 </p>
               </div>
             </div>
 
             <div className="mt-6 text-center">
-              <h2 className="text-xl font-bold">Mira</h2>
-              <p className="mt-1 text-sm text-slate-400">
+              <h2 className="text-xl font-bold text-violet-900">
+                Mira
+              </h2>
+              <p className="mt-1 text-sm text-slate-500">
                 SmartStock AI Assistant
               </p>
 
-              <p className="mx-auto mt-4 max-w-sm text-sm leading-6 text-slate-300">
+              <p className="mx-auto mt-4 max-w-sm text-sm leading-6 text-slate-600">
                 Ask me about product quantities, prices, total stock,
                 low-stock alerts, restocking and inventory reports.
               </p>
             </div>
 
+            {/* INVENTORY STATISTICS */}
             <div className="mt-6 grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
-                <p className="text-xs text-slate-400">Products</p>
-                <p className="mt-2 text-2xl font-bold">
+              <div className="rounded-2xl border border-violet-100 bg-white p-4 shadow-sm">
+                <p className="text-xs text-slate-500">Products</p>
+                <p className="mt-2 text-2xl font-bold text-violet-700">
                   {products.length}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
-                <p className="text-xs text-slate-400">Total units</p>
-                <p className="mt-2 text-2xl font-bold">
+              <div className="rounded-2xl border border-violet-100 bg-white p-4 shadow-sm">
+                <p className="text-xs text-slate-500">Total units</p>
+                <p className="mt-2 text-2xl font-bold text-violet-700">
                   {formatNumber(totalStock)}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-amber-400/20 bg-amber-400/5 p-4">
-                <p className="text-xs text-amber-200">Low stock</p>
-                <p className="mt-2 text-2xl font-bold text-amber-100">
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
+                <p className="text-xs text-amber-800">Low stock</p>
+                <p className="mt-2 text-2xl font-bold text-amber-900">
                   {lowStockProducts.length}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-rose-400/20 bg-rose-400/5 p-4">
-                <p className="text-xs text-rose-200">Out of stock</p>
-                <p className="mt-2 text-2xl font-bold text-rose-100">
+              <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4">
+                <p className="text-xs text-rose-800">Out of stock</p>
+                <p className="mt-2 text-2xl font-bold text-rose-900">
                   {outOfStockProducts.length}
                 </p>
               </div>
             </div>
 
-            <div className="mt-3 rounded-2xl border border-violet-400/20 bg-slate-950/50 p-4">
-              <p className="text-xs text-slate-400">
+            <div className="mt-3 rounded-2xl border border-violet-200 bg-white p-4 shadow-sm">
+              <p className="text-xs text-slate-500">
                 Estimated inventory value
               </p>
-              <p className="mt-2 text-xl font-bold">
+              <p className="mt-2 text-xl font-bold text-violet-800">
                 {formatMoney(inventoryValue)}
               </p>
             </div>
 
             {error && (
-              <p className="mt-4 rounded-xl border border-amber-400/20 bg-amber-400/5 p-3 text-xs leading-5 text-amber-200">
+              <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs leading-5 text-amber-800">
                 {error}
               </p>
             )}

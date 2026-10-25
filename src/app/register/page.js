@@ -126,9 +126,15 @@ function RegisterContent() {
       {/* Header */}
       <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
         <button onClick={goBack} className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-purple-800 text-2xl shadow-lg shadow-purple-300/40">
-            📦
-          </div>
+          
+      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl bg-white p-1 shadow-lg shadow-purple-300/40">
+        <img
+          src="/Images/logo1.jpg"
+          alt="SmartStock AI Logo"
+          className="h-full w-full object-contain"
+        />
+      </div>
+
 
           <div className="text-left">
             <h1 className="text-xl font-bold tracking-tight text-slate-900">
@@ -151,9 +157,15 @@ function RegisterContent() {
       {/* Main Content */}
       <section className="relative z-10 mx-auto max-w-4xl px-6 pb-16 pt-8 lg:pt-12">
         <div className="mb-8 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-purple-100 text-3xl shadow-sm">
-            🏪
-          </div>
+          
+      <div className="mx-auto flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-purple-200 bg-purple-100 p-1 shadow-sm">
+        <img
+          src="/Images/logo1.jpg"
+          alt="SmartStock AI Logo"
+          className="h-full w-full rounded-xl object-contain"
+        />
+      </div>
+    
 
           <h2 className="mt-5 text-3xl font-extrabold text-slate-900 sm:text-4xl">
             Register Your Shop

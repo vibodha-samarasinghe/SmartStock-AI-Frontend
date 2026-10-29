@@ -35,6 +35,7 @@ export default function AIAssistantPage() {
   const recognitionRef = useRef(null);
   const audioRef = useRef(null);
   const voiceOutputRef = useRef(false);
+  const voiceRequestIdRef = useRef(0);
 
   const [products, setProducts] = useState([]);
   const [question, setQuestion] = useState("");
@@ -257,113 +258,146 @@ export default function AIAssistantPage() {
   }, [messages, loading]);
 
   // Speak text using the separate Mira voice endpoint.
-  const speakText = useCallback(async (text) => {
-    const cleanText = String(text || "").trim();
+  
+const speakText = useCallback(async (text) => {
+  const cleanText = String(text || "").trim();
 
-    if (!cleanText) return;
+  // Never request audio when voice is OFF.
+  if (!cleanText || !voiceOutputRef.current) return;
 
-    const token = getToken();
+  const requestId = ++voiceRequestIdRef.current;
+  const token = getToken();
 
-    if (!token) {
+  if (!token) {
+    if (voiceOutputRef.current) {
       setVoiceError("Please log in to use Mira voice.");
+    }
+    return;
+  }
+
+  let audioUrl = null;
+
+  try {
+    setVoiceError("");
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    const response = await fetch(
+      `${BACKEND_URL}/api/mira/voice/speak`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          text: cleanText.slice(0, 1500),
+        }),
+      }
+    );
+
+    const data = await response.json().catch(() => ({}));
+
+    // Ignore results from an old request or when voice was switched OFF.
+    if (
+      !voiceOutputRef.current ||
+      requestId !== voiceRequestIdRef.current
+    ) {
       return;
     }
 
-    let audioUrl = null;
-
-    try {
-      setVoiceError("");
-
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-        audioRef.current = null;
-      }
-
-      const response = await fetch(
-        `${BACKEND_URL}/api/mira/voice/speak`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            text: cleanText.slice(0, 1500),
-          }),
-        }
-      );
-
-      const data = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        const message =
-          typeof data.error === "string"
-            ? data.error
-            : data.error?.message ||
-              data.message ||
-              `Voice request failed (${response.status})`;
-
-        throw new Error(message);
-      }
-
-      if (!data.audio) {
-        throw new Error("Mira returned no audio data.");
-      }
-
-      const binary = window.atob(data.audio);
-      const bytes = new Uint8Array(binary.length);
-
-      for (let index = 0; index < binary.length; index++) {
-        bytes[index] = binary.charCodeAt(index);
-      }
-
-      const blob = new Blob([bytes], {
-        type: data.mimeType || "audio/wav",
-      });
-
-      audioUrl = URL.createObjectURL(blob);
-
-      const audio = new Audio(audioUrl);
-      audioRef.current = audio;
-
-      audio.onended = () => {
-        URL.revokeObjectURL(audioUrl);
-
-        if (audioRef.current === audio) {
-          audioRef.current = null;
-        }
-      };
-
-      audio.onerror = () => {
-        URL.revokeObjectURL(audioUrl);
-
-        if (audioRef.current === audio) {
-          audioRef.current = null;
-        }
-
-        setVoiceError("Mira voice audio could not be played.");
-      };
-
-      await audio.play();
-    } catch (err) {
-      console.error("Mira voice error:", err);
-
-      if (audioUrl) {
-        URL.revokeObjectURL(audioUrl);
-      }
-
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-
-      setVoiceError(
-        err.message || "Could not play Mira's voice."
+    if (!response.ok) {
+      throw new Error(
+        data.message ||
+        data.error?.message ||
+        (typeof data.error === "string" ? data.error : "") ||
+        `Voice request failed (${response.status})`
       );
     }
-  }, []);
 
+    if (!data.audio) {
+      throw new Error("Mira returned no audio data.");
+    }
+
+    const binary = window.atob(data.audio);
+    const bytes = new Uint8Array(binary.length);
+
+    for (let index = 0; index < binary.length; index++) {
+      bytes[index] = binary.charCodeAt(index);
+    }
+
+    const blob = new Blob([bytes], {
+      type: data.mimeType || "audio/wav",
+    });
+
+    audioUrl = URL.createObjectURL(blob);
+
+    // Check again before playing.
+    if (
+      !voiceOutputRef.current ||
+      requestId !== voiceRequestIdRef.current
+    ) {
+      URL.revokeObjectURL(audioUrl);
+      return;
+    }
+
+    const audio = new Audio(audioUrl);
+    audioRef.current = audio;
+
+    audio.onended = () => {
+      URL.revokeObjectURL(audioUrl);
+
+      if (audioRef.current === audio) {
+        audioRef.current = null;
+      }
+    };
+
+    audio.onerror = () => {
+      URL.revokeObjectURL(audioUrl);
+
+      if (audioRef.current === audio) {
+        audioRef.current = null;
+      }
+
+      if (
+        voiceOutputRef.current &&
+        requestId === voiceRequestIdRef.current
+      ) {
+        setVoiceError("Mira voice audio could not be played.");
+      }
+    };
+
+    await audio.play();
+  } catch (err) {
+    if (audioUrl) {
+      URL.revokeObjectURL(audioUrl);
+    }
+
+    // Do not show an error for a request that is no longer relevant.
+    if (
+      !voiceOutputRef.current ||
+      requestId !== voiceRequestIdRef.current
+    ) {
+      return;
+    }
+
+    console.error("Mira voice error:", err);
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+
+    setVoiceError(
+      "Mira voice is temporarily unavailable. Please try again later."
+    );
+  }
+}, []);
+ 
   const startListening = useCallback(() => {
     if (!recognitionRef.current) {
       setVoiceError(
@@ -693,30 +727,36 @@ export default function AIAssistantPage() {
 
               <button
                 type="button"
-                onClick={() => {
-                  const next = !voiceOutput;
+                
+onClick={() => {
+  const next = !voiceOutput;
 
-                  setVoiceOutput(next);
-                  voiceOutputRef.current = next;
+  setVoiceOutput(next);
+  voiceOutputRef.current = next;
 
-                  if (!next && audioRef.current) {
-                    audioRef.current.pause();
-                    audioRef.current.currentTime = 0;
-                    audioRef.current = null;
-                  }
+  // Invalidate any previous TTS response.
+  voiceRequestIdRef.current += 1;
 
-                  if (next) {
-                    const lastBotMessage = [...messages]
-                      .reverse()
-                      .find((message) => message.type === "bot");
+  if (!next) {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
 
-                    if (lastBotMessage) {
-                      void speakText(lastBotMessage.text);
-                    }
-                  } else {
-                    setVoiceError("");
-                  }
-                }}
+    setVoiceError("");
+    return;
+  }
+
+  const lastBotMessage = [...messages]
+    .reverse()
+    .find((message) => message.type === "bot");
+
+  if (lastBotMessage) {
+    void speakText(lastBotMessage.text);
+  }
+}}
+
                 className={`rounded-xl px-4 py-2.5 text-sm font-semibold ${
                   voiceOutput
                     ? "bg-violet-600 text-white"
